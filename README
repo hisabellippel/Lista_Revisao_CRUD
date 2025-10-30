@@ -1,0 +1,16 @@
+# Lista de Revisão - CRUD
+
+## Integrantes
+Hisabel Lippel.
+
+## Sobre
+ A atividade consiste no desenvolvimento completo de um sistema de gerenciamento de tarefas baseado no modelo to do list, seguindo uma sequência de entregas técnicas.
+ Uma indústria alimentícia utiliza o kanban em formato simples (a fazer, fazendo e pronto) para gerenciar tarefas, mas precisa de maior integração e visibilidade entre setores.
+
+ O desafio é desenvolver uma aplicação de gerenciamento de tarefas no modelo to do list, permitindo cadastrar, visualizar e atualizar tarefas por usuário, com controle de prioridade e status, exibidas em uma tabela dividida por etapas.
+
+
+## Funcionalidades Principais
+- Gerenciamento de tarefas;
+- Armazenamento de dados;
+- Cadastramento e atualização de tarefas;
