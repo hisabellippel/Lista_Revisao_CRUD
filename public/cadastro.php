@@ -5,21 +5,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user = $_POST["nome"] ?? "";
     $pass = $_POST["senha"] ?? "";
-    $email  = $_POST['email'] ?? "";
+    $email = $_POST['email'] ?? "";
+    $cep = $_POST['cep'] ?? "";
 
-    $sql = " INSERT INTO usuarios (nome,senha,email) VALUE ('$user','$pass','$email')";
+    $url = "https://viacep.com.br/ws/" . $cep . "/json/";
+    $dados_json = file_get_contents($url);
+    $dados = json_decode($dados_json, true);
+
+    // API ViaCep
+    $url = "https://viacep.com.br/ws/" . $cep . "/json/";
+    $dados_json = @file_get_contents($url); 
+    $dados = json_decode($dados_json, true);
+
+  
+    $pass = password_hash($pass, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO usuarios (nome, senha, email) VALUES ('$user', '$pass', '$email')";
+
+    if ($dados && !isset($dados['erro'])) {
+        echo "<h2>Resultado da Pesquisa</h2>";
+        echo "<p><b>CEP:</b> " . $dados['cep'] . "<br>";
+    }
 
     if ($conn->query($sql) === true) {
         echo "Novo registro criado com sucesso.";
     } else {
-        echo "Erro " . $sql . '<br>' . $conn->error;
+        echo "Erro ao inserir no banco: " . $conn->error;
     }
+
     $conn->close();
 }
-else {
-}
-
 ?>
+
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -36,7 +53,7 @@ else {
 <body>
 <h3>Cadastrar-se</h3>
     <div class="menu-container">
-        <form method="post" action="create_tarefas.php">
+        <form method="post">
             <div class="c2">
                 <input type="text" name="nome" placeholder="Insira seu nome" required>
             </div>
@@ -49,6 +66,10 @@ else {
                 <input type="email" name="email" placeholder="Insira seu Email" required>
             </div>
             <br>
+            <div class="c2">
+                <input type="text" name="cep" placeholder="Buscar CEP" required>
+            </div>
+
             <button type="submit">Entrar</button> <br>
             <a href="login.php">Clique aqui caso já tenha cadastro!</a>
         </form>

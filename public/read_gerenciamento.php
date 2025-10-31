@@ -1,7 +1,7 @@
 <?php
 include '../includes/conexao.php';
 
-function listarTarefas($mysqli) {
+function listarTarefas($conn) {
     $sql = "
         SELECT 
             t.id, 
@@ -15,10 +15,14 @@ function listarTarefas($mysqli) {
         JOIN usuarios u ON t.usuario_responsavel = u.id
         ORDER BY t.data_cadastro DESC
     ";
-    return $mysqli->query($sql);
+    return $conn->query($sql);
 }
 
-$tarefas = listarTarefas($mysqli);
+$tarefas = listarTarefas($conn);
+
+if (!$tarefas) {
+    die('Erro ao buscar tarefas: ' . $conn->error);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

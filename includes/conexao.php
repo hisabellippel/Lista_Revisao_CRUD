@@ -1,14 +1,12 @@
 <?php
-
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$dbname = "kanban_db";
+$dbname = "kanban_db"; 
 
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($mysqli->connect_error) {
-    die("Conexao falhou: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
 }
-
 ?>
