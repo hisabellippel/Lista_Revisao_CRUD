@@ -1,4 +1,5 @@
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0px;
     padding: 0px;
 }
@@ -65,4 +66,38 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.c2 {
+    display: flex;
+}
+
+.card {
+      border: 3px solid rgb(138, 168, 212);
+      padding: 20px;
+      border-radius: 6px;
+      margin: 15% 10%;
+  }
+
+input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+  }
+
+button {
+      padding: 8px 12px;
+  }
+
+.msg {
+      color: red;
+  }
+
+a:link {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+  }
+
+a:hover {
+    color: rgb(255, 255, 255);
 }

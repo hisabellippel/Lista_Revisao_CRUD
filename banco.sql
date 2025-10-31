@@ -4,7 +4,8 @@ USE kanban_db;
 CREATE TABLE usuarios (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(120) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE tarefas (
@@ -19,7 +20,7 @@ CREATE TABLE tarefas (
 );
 
 INSERT INTO usuarios (nome, email) VALUES
-('Hisabel Lippel', 'hisabel@lippel');
+('Hisabel Lippel', 'hisabel@lippel', '6768');
 
 INSERT INTO tarefas (descricao, setor, prioridade, data_cadastro, status_tarefa, usuario_responsavel) VALUES
 ('Guardar os refrigerantes', 'Bebidas', 'Média', '2025-09-10', 'Fazer', 1);

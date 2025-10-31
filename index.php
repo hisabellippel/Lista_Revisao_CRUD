@@ -12,18 +12,10 @@
     </header>
 
 <main>
-    <div class="menu-container">
-      <a href="public/create_usuarios.php">
+  <div class="menu-container">
+      <a href="public/login.php">
         <button class="botaoMenu">
-          <h4>Cadastro de Usuários</h4>
-        </button>
-      </a>
-    </div>
-
-    <div class="menu-container">
-      <a href="public/create_tarefas.php">
-        <button class="botaoMenu">
-          <h4>Cadastrar Tarefas</h4>
+          <h4>Entrar no Sistema</h4>
         </button>
       </a>
     </div>
