@@ -2,25 +2,19 @@
 include '../includes/conexao.php';
 
 $erro = '';
-
-function cadastrarUsuario($mysqli, $nome, $email) {
-    $query = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("ss", $nome, $email);
-    $stmt->execute();
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome  = trim($_POST['nome']  ?? '');
+    $nome = trim($_POST['nome'] ?? '');
     $email = trim($_POST['email'] ?? '');
 
-    if (!empty($nome) && !empty($email)) {
-        cadastrarUsuario($mysqli, $nome, $email);
+    if ($nome && $email) {
+        $stmt = $mysqli->prepare("INSERT INTO usuarios (nome, email) VALUES (?, ?)");
+        $stmt->bind_param("ss", $nome, $email);
+        $stmt->execute();
         header('Location: create_usuarios.php');
         exit;
+    } else {
+        $erro = 'Preencha todos os campos.';
     }
-
-    $erro = 'Preencha todos os campos.';
 }
 ?>
 <!DOCTYPE html>

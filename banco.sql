@@ -19,7 +19,7 @@ CREATE TABLE tarefas (
     FOREIGN KEY (usuario_responsavel) REFERENCES usuarios(id)
 );
 
-INSERT INTO usuarios (nome, email) VALUES
+INSERT INTO usuarios (nome, email, senha) VALUES
 ('Hisabel Lippel', 'hisabel@lippel', '6768');
 
 INSERT INTO tarefas (descricao, setor, prioridade, data_cadastro, status_tarefa, usuario_responsavel) VALUES

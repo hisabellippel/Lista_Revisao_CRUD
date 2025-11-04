@@ -1,38 +1,40 @@
 <?php
-include '../includes/conexao.php';
+ include '../includes/conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $user = $_POST["nome"] ?? "";
     $pass = $_POST["senha"] ?? "";
     $email = $_POST['email'] ?? "";
     $cep = $_POST['cep'] ?? "";
 
+    // Consulta API ViaCEP
     $url = "https://viacep.com.br/ws/" . $cep . "/json/";
-    $dados_json = file_get_contents($url);
+    $dados_json = @file_get_contents($url);
     $dados = json_decode($dados_json, true);
 
-    // API ViaCep
-    $url = "https://viacep.com.br/ws/" . $cep . "/json/";
-    $dados_json = @file_get_contents($url); 
-    $dados = json_decode($dados_json, true);
-
-  
     $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO usuarios (nome, senha, email) VALUES ('$user', '$pass', '$email')";
+    $stmt = $conn->prepare("INSERT INTO usuarios (nome, senha, email) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $user, $pass, $email);
+
+    if ($stmt->execute()) {
+        echo "Novo registro criado com sucesso.<br>";
+    } else {
+        echo "Erro ao inserir no banco: " . $stmt->error;
+    }
 
     if ($dados && !isset($dados['erro'])) {
         echo "<h2>Resultado da Pesquisa</h2>";
-        echo "<p><b>CEP:</b> " . $dados['cep'] . "<br>";
-    }
-
-    if ($conn->query($sql) === true) {
-        echo "Novo registro criado com sucesso.";
+        echo "<p><b>CEP:</b> {$dados['cep']}<br>";
+        echo "<b>Logradouro:</b> {$dados['logradouro']}<br>";
+        echo "<b>Bairro:</b> {$dados['bairro']}<br>";
+        echo "<b>Cidade:</b> {$dados['localidade']}<br>";
+        echo "<b>UF:</b> {$dados['uf']}</p>";
     } else {
-        echo "Erro ao inserir no banco: " . $conn->error;
+        echo "CEP inválido ou não encontrado.";
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
@@ -67,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <br>
             <div class="c2">
-                <input type="text" name="cep" placeholder="Buscar CEP" required>
+                <input type="text" id="cep" name="cep" placeholder="Buscar CEP" required>
             </div>
 
             <button type="submit">Entrar</button> <br>
